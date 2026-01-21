@@ -108,7 +108,8 @@ Clean separation: LLM doesn't touch validation, validation doesn't touch LLM.
 
 ```bash
 pip install -r requirements.txt
-echo "OPENAI_API_KEY=your-key-here" > .env
+cp .env.example .env
+# Edit .env and add your OpenAI API key
 python -m src.main
 ```
 
