@@ -109,6 +109,11 @@ Clean separation: LLM doesn't touch validation, validation doesn't touch LLM.
 ## Quick Start
 
 ```bash
+git clone https://github.com/itsamoghgr/propy-bad-deed-validator.git
+cd propy-bad-deed-validator
+```
+
+```bash
 pip install -r requirements.txt
 cp .env.example .env
 # Edit .env and add your OpenAI API key
