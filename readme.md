@@ -5,13 +5,12 @@ My solution to Propy's "Bad Deed" validation challenge. The task: handle messy O
 ## The Problem
 
 If an LLM hallucinates a number on a deed, Propy could record a fraudulent transaction on the blockchain. 
+
 The challenge: use AI for parsing, validate everything with deterministic code.
 
 The test data has two bugs:
 1. Deed "recorded" before it was signed
 2. $50,000 discrepancy between numeric amount and written words
-
-Catch both with code, not prompts.
 
 ## My Approach
 
@@ -49,7 +48,7 @@ if date_recorded < date_signed:
     raise InvalidDateSequenceError()
 ```
 
-Catches the wrong date sequence: recorded Jan 10, signed Jan 15. Pure date comparison, no LLM.
+Catches the impossible date sequence: recorded Jan 10, signed Jan 15. Pure date comparison, no LLM.
 
 ### 3. Amount Consistency Validator
 
@@ -64,7 +63,7 @@ Catches the $50k discrepancy:
 - Words: "One Million Two Hundred Thousand" = $1,200,000
 - Tolerance: $0.00
 
-Why $1 tolerance? Because the numeric and written amounts come from the same legal document, any difference, even $1 indicates an integrity or fraud risk and must be rejected.
+Why $0 tolerance? Because the numeric and written amounts come from the same legal document, any difference, even $1 indicates an integrity or fraud risk and must be rejected.
 
 **Important:** The validator runs ALL checks and shows ALL errors at once.
 
@@ -87,7 +86,7 @@ Algorithm:
 3. Fuzzy match using Python's difflib (SequenceMatcher)
 4. Require 80% confidence threshold
 
-No LLM guessing. Explicit matching logic with confidence scores.
+No LLM guessing, explicitly matching logic with confidence scores.
 
 ## Code Structure
 
@@ -103,7 +102,7 @@ src/
 └── tests/               # Unit tests
 ```
 
-Clean separation: LLM doesn't touch validation. Validation doesn't touch LLM.
+Clean separation: LLM doesn't touch validation, validation doesn't touch LLM.
 
 ## Quick Start
 
@@ -134,7 +133,7 @@ Error 2: AmountMismatchError
     Numeric: $1,250,000.00
     Words: $1,200,000.00
     Discrepancy: $50,000.00
-    Tolerance: $1.00
+    Tolerance: $0.00
 ```
 
 **JSON output (clean, separate error objects):**
@@ -153,6 +152,8 @@ Error 2: AmountMismatchError
   ]
 }
 ```
+
+![Terminal Output](terminal-output.png)
 
 **With valid data:**
 ```json
