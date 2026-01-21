@@ -1,6 +1,8 @@
 # Propy Bad-Deed Validator
 
-My solution to Propy's "Bad Deed" validation challenge. The task: handle messy OCR text from real estate deeds while being paranoid enough not to trust AI for anything critical.
+My solution to Propy's "Bad Deed" validation challenge. 
+
+The task: handle messy OCR text from real estate deeds while being paranoid enough not to trust AI for anything critical.
 
 ## The Problem
 
